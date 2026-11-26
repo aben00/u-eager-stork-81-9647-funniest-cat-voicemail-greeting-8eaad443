@@ -1,0 +1,1 @@
+{"name":"u-eager-stork-81-9647-funniest-cat-voicemail-greeting-8eaad443","version":"1.0.0","type":"module","main":"main.ts","license":"MIT","description":"The funniest voicemail greeting a cat could record, at most 120 characters.","scripts":{"start":"node main.ts"}}
