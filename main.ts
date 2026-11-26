@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -22,9 +23,11 @@ if (ENTRY.includes("\n") || ENTRY.includes("\r")) {
 
 writeFileSync(outPath, ENTRY, "utf8");
 
-// Read back and verify byte-for-byte.
+// Read back and verify byte-for-byte, then report the output hash so any
+// run can be checked for determinism against it.
 const back = readFileSync(outPath, "utf8");
 if (back !== ENTRY) {
   throw new Error("read-back mismatch: entry.txt does not match the entry");
 }
-console.log(`Wrote ${outPath} (${ENTRY.length} characters)`);
+const sha256 = createHash("sha256").update(back, "utf8").digest("hex");
+console.log(`Wrote ${outPath} (${ENTRY.length} characters, sha256 ${sha256})`);
